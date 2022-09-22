@@ -1,0 +1,25 @@
+{
+  "name": "ee.taltech.ivar.robotics.ros-robot-programming",
+  "version": "0.0.1",
+  "displayName": "ROS Robot Programming",
+  "description": "Collection of scripts to record and play back trajectories on connected ROS Robots.",
+  "unity": "2020.3",
+  "keywords": [
+    "ui",
+    "hierarchy",
+    "linter",
+    "cleanup",
+    "formatter"
+  ],
+  "author": {
+    "name": "Yevhen Bondarenko",
+    "email": "yevhen.bondarenko@taltech.ee",
+    "url": "https://gitlab.com/JGroxz"
+  },
+  "dependencies": {
+    "ee.taltech.ivar.robotics.moveit": "1.0.3",
+    "ee.taltech.ivar.robotics.ros-industrial": "1.2.2"
+  },
+  "samples": [],
+  "hideInEditor": false
+}
