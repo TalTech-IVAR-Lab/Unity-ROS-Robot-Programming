@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "ee.taltech.ivar.robotics.moveit": "1.0.3",
-    "ee.taltech.ivar.robotics.ros-industrial": "1.2.2"
+    "ee.taltech.ivar.robotics.ros-industrial": "1.2.2",
+    "io.extendreality.zinnia.unity": "2.0.0"
   },
   "samples": [],
   "hideInEditor": false
