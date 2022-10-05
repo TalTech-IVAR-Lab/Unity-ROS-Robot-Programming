@@ -1,6 +1,6 @@
 {
   "name": "ee.taltech.ivar.robotics.ros-robot-programming",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "displayName": "ROS Robot Programming",
   "description": "Collection of scripts to record and play back trajectories on connected ROS Robots.",
   "unity": "2020.3",

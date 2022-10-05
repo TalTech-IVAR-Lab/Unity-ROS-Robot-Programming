@@ -1,3 +1,10 @@
+## [1.1.2](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.1...v1.1.2) (2022-10-05)
+
+
+### 🛠 Fixes
+
+* Fix sanity checks in PathTracingTool ([dc0c790](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/dc0c790682fa87e103b7bc01f6814b61c1b4286b))
+
 ## [1.1.1](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.0...v1.1.1) (2022-10-05)
 
 
