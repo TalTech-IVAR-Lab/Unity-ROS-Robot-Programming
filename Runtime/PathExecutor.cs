@@ -16,7 +16,7 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
         public PathSelector pathSelector;
 
         public MoveItIKService ikService;
-        public RosIndustrialRobotMotionController robotController;
+        public MoveItRobotMotionController robotController;
 
         [Header("Runtime values")]
         [SerializeField]
