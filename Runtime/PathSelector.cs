@@ -41,7 +41,7 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
 
         private int GetClosestValidPathIndex(int i)
         {
-            if (!isActiveAndEnabled)
+            if (!gameObject.activeInHierarchy)
             {
                 // Special case: no path should be selected if this component is inactive
                 return -1;
