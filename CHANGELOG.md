@@ -1,3 +1,10 @@
+## [1.1.1](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.0...v1.1.1) (2022-10-05)
+
+
+### 🛠 Fixes
+
+* Fix PathSelector indexing when inactive ([e05b06d](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/e05b06dcbc6e1e5be3e3d3ea1d5df1f54c72bbfd))
+
 ## [1.1.0](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.0.0...v1.1.0) (2022-10-05)
 
 
