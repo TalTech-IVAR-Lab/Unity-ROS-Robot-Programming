@@ -97,7 +97,7 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
             int numberToDestroy = availableMarkers - totalPoints;
             for (int i = 0; i < numberToDestroy; i++)
             {
-                var markerToDestroy = pathPointMarkers[-1];
+                var markerToDestroy = pathPointMarkers.Last();
                 pathPointMarkers.Remove(markerToDestroy);
                 Destroy(markerToDestroy);
             }
