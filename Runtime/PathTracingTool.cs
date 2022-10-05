@@ -36,8 +36,14 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
         public void AddPointToSelectedPath()
         {
             // Sanity checks
-            if (!pathCoordinateSpaceOrigin) { Debug.LogException(new ApplicationException($"Cannot save path point: '{nameof(pathCoordinateSpaceOrigin)}' Transform is not set.")); }
-            if (!SelectedPath) { Debug.LogException(new ApplicationException($"Cannot save path point: no pat is currently selected.\n Select path in the connected {nameof(PathSelector)}.")); }
+            if (!pathCoordinateSpaceOrigin) { 
+                Debug.LogError($"Cannot save path point: '{nameof(pathCoordinateSpaceOrigin)}' Transform is not set.", this);
+                return;
+            }
+            if (!SelectedPath) { 
+                Debug.LogError($"Cannot save path point: no path is currently selected.\nSelect a path in the connected {nameof(PathSelector)}.", this);
+                return;
+            }
 
             // Find tool pose in the path origin coordinates
             var pathPointPose = new Pose
