@@ -1,3 +1,12 @@
+## [1.1.3](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.2...v1.1.3) (2022-10-05)
+
+
+### 🛠 Fixes
+
+* Fix joint space transformations in PathExecutor ([86c300d](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/86c300d374eddb87ac00df4a4624aca97e98208b))
+* Fix visualizer displaying path after it's been deleted ([ad43dbf](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/ad43dbf20b0f7153fb6645e73ce554b761051a1a))
+* Update package dependencies ([c9198e2](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/c9198e2545a80618b9403a15100ad5e68a20ab3c))
+
 ## [1.1.2](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.1...v1.1.2) (2022-10-05)
 
 
