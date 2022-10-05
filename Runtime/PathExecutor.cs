@@ -1,3 +1,6 @@
+using EE.TalTech.IVAR.Robotics.ROSIndustrial.MoveItIntegration;
+using RosMessageTypes.Moveit;
+
 namespace EE.TalTech.IVAR.Robotics.Programming.Paths
 {
     using Cysharp.Threading.Tasks;
@@ -17,6 +20,11 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
 
         public MoveItIKService ikService;
         public MoveItRobotMotionController robotController;
+
+        /// <summary>
+        /// Coordinate system that the path has to be executed in.
+        /// </summary>
+        public Transform pathCoordinateSpaceOrigin;
 
         [Header("Runtime values")]
         [SerializeField]
@@ -42,18 +50,52 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
         {
             IsExecuting = true;
 
-            var path = pathSelector.SelectedPath.pointsPose;
+            var pathPoses = pathSelector.SelectedPath.pointsPose;
 
-            foreach (var point in path)
+            Debug.Log($"Starting executing '{pathSelector.SelectedPath}'...");
+
+            for (var i = 0; i < pathPoses.Count; i++)
             {
+                var pose = pathPoses[i];
+
+                // Log
+                Debug.Log($"Executing motion to pose: {pose}");
+
+                // Convert pose back to world space before using it for IK
+                var ikPose = new Pose
+                {
+                    position = pathCoordinateSpaceOrigin.TransformPoint(pose.position),
+                    rotation = pathCoordinateSpaceOrigin.rotation * pose.rotation
+                };
+
                 // Calculate IK
-                var ikSolution = await ikService.ComputeIK(point);
-                string[] jointNames = ikSolution.solution.joint_state.name;
-                double[] jointPositions = ikSolution.solution.joint_state.position;
+                var ikSolution = await ikService.ComputeIK(ikPose);
+
+                // Handle response
+                if (ikSolution.error_code.val != MoveItErrorCodesMsg.SUCCESS)
+                {
+                    var error = new MoveItErrorCode(ikSolution.error_code.val);
+                    Debug.LogError($"Path execution failed ('{pathSelector.SelectedPath}'): Error when computing IK. MoveIt error code {error.intValue} ({error})");
+                    return;
+                }
+
+                string ikResults = "";
+                foreach (double jointAngle in ikSolution.solution.joint_state.position) { ikResults += $"    {jointAngle}\n"; }
+
+                //Debug.Log($"Received IK solution in {(Time.time - timer)} s:\n{ikResults}");
 
                 // Move to solution
-                await robotController.Move(jointNames, jointPositions);
+                Debug.Log($"Starting motion to point {i + 1}/{pathPoses.Count}...");
+
+                string[] jointNames = ikSolution.solution.joint_state.name;
+                double[] jointPositionsRos = ikSolution.solution.joint_state.position;
+                double[] jointPositionsUnity = RobotJointPositionsConversionUtility.RosToUnity(robotController.robotKinematics, jointNames, jointPositionsRos);
+                await robotController.Move(jointNames, jointPositionsUnity);
+
+                Debug.Log($"Move to point {i + 1}/{pathPoses.Count}.");
             }
+
+            Debug.Log($"Finished executing path '{pathSelector.SelectedPath}'!");
 
             IsExecuting = false;
         }
