@@ -50,19 +50,22 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
         {
             IsExecuting = true;
 
-            var path = pathSelector.SelectedPath.pointsPose;
+            var pathPoses = pathSelector.SelectedPath.pointsPose;
 
-            for (var i = 0; i < path.Count; i++)
+            Debug.Log($"Starting executing '{pathSelector.SelectedPath}'...");
+
+            for (var i = 0; i < pathPoses.Count; i++)
             {
-                var point = path[i];
+                var pose = pathPoses[i];
+
                 // Log
-                Debug.Log($"Executing motion to pose: {point}");
+                Debug.Log($"Executing motion to pose: {pose}");
 
                 // Convert pose back to world space before using it for IK
                 var ikPose = new Pose
                 {
-                    position = pathCoordinateSpaceOrigin.TransformPoint(point.position),
-                    rotation = Quaternion.identity // pathCoordinateSpaceOrigin.rotation * point.rotation
+                    position = pathCoordinateSpaceOrigin.TransformPoint(pose.position),
+                    rotation = pathCoordinateSpaceOrigin.rotation * pose.rotation
                 };
 
                 // Calculate IK
@@ -72,28 +75,27 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
                 if (ikSolution.error_code.val != MoveItErrorCodesMsg.SUCCESS)
                 {
                     var error = new MoveItErrorCode(ikSolution.error_code.val);
-                    Debug.LogError(
-                        $"Error when computing IK. MoveIt error code {error.intValue} ({error})"); //. Communicated in {(Time.time - timer)} s.");
+                    Debug.LogError($"Path execution failed ('{pathSelector.SelectedPath}'): Error when computing IK. MoveIt error code {error.intValue} ({error})");
                     return;
                 }
 
                 string ikResults = "";
-                foreach (double jointAngle in ikSolution.solution.joint_state.position)
-                {
-                    ikResults += $"    {jointAngle}\n";
-                }
+                foreach (double jointAngle in ikSolution.solution.joint_state.position) { ikResults += $"    {jointAngle}\n"; }
 
                 //Debug.Log($"Received IK solution in {(Time.time - timer)} s:\n{ikResults}");
 
                 // Move to solution
-                Debug.Log($"Starting motion to point {i+1}/{path.Count}...");
-                
-                string[] jointNames = ikSolution.solution.joint_state.name;
-                double[] jointPositions = ikSolution.solution.joint_state.position;
-                await robotController.Move(jointNames, jointPositions);
+                Debug.Log($"Starting motion to point {i + 1}/{pathPoses.Count}...");
 
-                Debug.Log($"Move to point {i+1}/{path.Count}.");
+                string[] jointNames = ikSolution.solution.joint_state.name;
+                double[] jointPositionsRos = ikSolution.solution.joint_state.position;
+                double[] jointPositionsUnity = RobotJointPositionsConversionUtility.RosToUnity(robotController.robotKinematics, jointNames, jointPositionsRos);
+                await robotController.Move(jointNames, jointPositionsUnity);
+
+                Debug.Log($"Move to point {i + 1}/{pathPoses.Count}.");
             }
+
+            Debug.Log($"Finished executing path '{pathSelector.SelectedPath}'!");
 
             IsExecuting = false;
         }
