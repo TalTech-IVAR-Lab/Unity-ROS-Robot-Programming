@@ -61,6 +61,7 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
             if (!SelectedPath)
             {
                 RemoveAllMarkers();
+                UpdateLine();
                 return;
             }
 
@@ -152,6 +153,9 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
 
             // Only show line if any path is selected
             lineRenderer.enabled = (SelectedPath != null);
+            
+            // If no path is selected, nothing else to do here
+            if (!SelectedPath) return;
 
             // Populate line from path data
             int totalPoints = SelectedPath.pointsPose.Count;
