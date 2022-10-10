@@ -1,3 +1,10 @@
+## [1.1.4](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.3...v1.1.4) (2022-10-10)
+
+
+### 🛠 Fixes
+
+* Cartesian motion in PathExecutor ([47a775a](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/47a775a9d4b136de992e0126152d99c949515316))
+
 ## [1.1.3](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.2...v1.1.3) (2022-10-05)
 
 
