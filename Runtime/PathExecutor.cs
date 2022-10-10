@@ -1,11 +1,10 @@
-using EE.TalTech.IVAR.Robotics.ROSIndustrial.MoveItIntegration;
-using RosMessageTypes.Moveit;
-
 namespace EE.TalTech.IVAR.Robotics.Programming.Paths
 {
     using Cysharp.Threading.Tasks;
     using MoveItIntegration;
     using ROSIndustrial;
+    using ROSIndustrial.MoveItIntegration;
+    using RosMessageTypes.Moveit;
     using UnityEngine;
     using Zinnia.Data.Attribute;
 
@@ -58,41 +57,18 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
             {
                 var pose = pathPoses[i];
 
-                // Log
-                Debug.Log($"Executing motion to pose: {pose}");
-
-                // Convert pose back to world space before using it for IK
-                var ikPose = new Pose
+                // Convert pose back to world space before using it in the request
+                var worldPose = new Pose
                 {
                     position = pathCoordinateSpaceOrigin.TransformPoint(pose.position),
                     rotation = pathCoordinateSpaceOrigin.rotation * pose.rotation
                 };
 
-                // Calculate IK
-                var ikSolution = await ikService.ComputeIK(ikPose);
-
-                // Handle response
-                if (ikSolution.error_code.val != MoveItErrorCodesMsg.SUCCESS)
-                {
-                    var error = new MoveItErrorCode(ikSolution.error_code.val);
-                    Debug.LogError($"Path execution failed ('{pathSelector.SelectedPath}'): Error when computing IK. MoveIt error code {error.intValue} ({error})");
-                    return;
-                }
-
-                string ikResults = "";
-                foreach (double jointAngle in ikSolution.solution.joint_state.position) { ikResults += $"    {jointAngle}\n"; }
-
-                //Debug.Log($"Received IK solution in {(Time.time - timer)} s:\n{ikResults}");
-
-                // Move to solution
                 Debug.Log($"Starting motion to point {i + 1}/{pathPoses.Count}...");
-
-                string[] jointNames = ikSolution.solution.joint_state.name;
-                double[] jointPositionsRos = ikSolution.solution.joint_state.position;
-                double[] jointPositionsUnity = RobotJointPositionsConversionUtility.RosToUnity(robotController.robotKinematics, jointNames, jointPositionsRos);
-                await robotController.Move(jointNames, jointPositionsUnity);
-
-                Debug.Log($"Move to point {i + 1}/{pathPoses.Count}.");
+                
+                await robotController.MoveCartesian(worldPose);
+                
+                Debug.Log($"Moved to point {i + 1}/{pathPoses.Count}.");
             }
 
             Debug.Log($"Finished executing path '{pathSelector.SelectedPath}'!");
