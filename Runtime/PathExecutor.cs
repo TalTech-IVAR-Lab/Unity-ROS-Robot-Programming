@@ -71,7 +71,7 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
                 Debug.Log($"Moved to point {i + 1}/{pathPoses.Count}.");
             }
 
-            Debug.Log($"Finished executing path '{pathSelector.SelectedPath}'!");
+            Debug.Log($"Finished executing path '{pathSelector.SelectedPath}'.");
 
             IsExecuting = false;
         }
