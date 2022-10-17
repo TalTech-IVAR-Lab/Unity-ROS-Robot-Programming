@@ -1,3 +1,10 @@
+## [1.1.5](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.4...v1.1.5) (2022-10-17)
+
+
+### 🛠 Fixes
+
+* Abort path execution on error in PathExecutor ([3429158](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/commit/3429158a77c2818d6d4a47c1a2345f36999c6b9e))
+
 ## [1.1.4](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.3...v1.1.4) (2022-10-10)
 
 
