@@ -66,7 +66,14 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
 
                 Debug.Log($"Starting motion to point {i + 1}/{pathPoses.Count}...");
                 
-                await robotController.MoveCartesian(worldPose);
+                bool motionSuccessful = await robotController.MoveCartesian(worldPose);
+
+                if (!motionSuccessful)
+                {
+                    Debug.LogError($"Motion to point {i + 1} failed. Please check the logs to identify the issue.\n" +
+                                   $"Aborting the rest of the trajectory execution.");
+                    break;
+                }
                 
                 Debug.Log($"Moved to point {i + 1}/{pathPoses.Count}.");
             }
