@@ -1,3 +1,15 @@
+## [1.1.6](https://github.com/TalTech-IVAR-Lab/Unity-ROS-Robot-Programming/compare/v1.1.5...v1.1.6) (2023-01-15)
+
+
+### ⚙️ CI/CD
+
+* Update CI for GitHub ([eac9fc8](https://github.com/TalTech-IVAR-Lab/Unity-ROS-Robot-Programming/commit/eac9fc8b2bacd7d27bd12e63247629a246e6b04f))
+
+
+### 🛠 Fixes
+
+* Update dependencies ([29f0e8d](https://github.com/TalTech-IVAR-Lab/Unity-ROS-Robot-Programming/commit/29f0e8d7e81030017b2445553297c898396cdf60))
+
 ## [1.1.5](https://gitlab.com/IVAR_Lab/unity-ros-robot-programming/compare/v1.1.4...v1.1.5) (2022-10-17)
 
 
