@@ -17,7 +17,7 @@
     "url": "https://gitlab.com/JGroxz"
   },
   "dependencies": {
-    "ee.taltech.ivar.robotics.moveit": "1.2.1",
+    "ee.taltech.ivar.robotics.moveit": "1.2.10",
     "io.extendreality.zinnia.unity": "2.0.0"
   },
   "samples": [],
