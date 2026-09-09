@@ -52,6 +52,10 @@ namespace EE.TalTech.IVAR.Robotics.Programming.Paths
                 rotation = Quaternion.Inverse(pathCoordinateSpaceOrigin.rotation) * tool.rotation
             };
 
+            Debug.Log($"PathTracingTool save: toolWorldPos={tool.position} toolWorldRot={tool.rotation.eulerAngles} " +
+                      $"origin={pathCoordinateSpaceOrigin.name} originWorldPos={pathCoordinateSpaceOrigin.position} originWorldRot={pathCoordinateSpaceOrigin.rotation.eulerAngles} " +
+                      $"savedLocalPos={pathPointPose.position} savedLocalRot={pathPointPose.rotation.eulerAngles}", this);
+
             // Save to path
             SelectedPath.pointsPose.Add(pathPointPose);
             PathFileHandler.SavePathToDefaultLocation(SelectedPath);
